@@ -1,17 +1,13 @@
 
 # Type system
 
-Lite's type system is designed around a foundational core that can always be statically resolved and sized.
-
-Everything is defined as a composition of minimal foundations, requiring some extra types which aren't found or exposed publicly in Luau.
-
-Beyond this, a set of types are added on top to deal with dynamic dispatch, arbitrary-size data, and shared data.
+Lite is designed around a carefully chosen set of types, with particular predictable characteristics.
 
 ## Symbols
 
-| Sized | Shared |
-|-------|--------|
-| yes   | no     |
+| Unsized | Owned |
+|---------|-------|
+| no      | yes   |
 
 Symbols are unique types that only equal themselves. They only have one variant, so are always equal to themselves.
 
@@ -27,9 +23,9 @@ Lite has built-in `nil`, `true` and `false` symbols.
 
 ## Values
 
-| Sized | Shared |
-|-------|--------|
-| yes   | no     |
+| Unsized | Owned |
+|---------|-------|
+| no      | yes   |
 
 Values carry opaque, owned data. They don't just have one variant, so aren't always equal to themselves.
 
@@ -43,25 +39,11 @@ type vector = value
 
 Lite has built-in `number`, `string` and `vector` values.
 
-## References
-
-| Sized | Shared |
-|-------|--------|
-| yes   | no     |
-
-References describe a pointer to some other data. References have a fixed size, but can point to any size data.
-
-They are defined using the `dyn` operator.
-
-```luau
-type far_away_person = dyn person
-```
-
 ## Structs
 
-| Sized               | Shared |
-|---------------------|--------|
-| if all contents are | no     |
+| Unsized     | Owned |
+|-------------|-------|
+| if contents | yes   |
 
 Structs describe a named group of values. They are uniquely identified by shape.
 
@@ -77,9 +59,9 @@ type person = {
 
 ## Unions
 
-| Sized               | Shared |
-|---------------------|--------|
-| if all contents are | no     |
+| Unsized     | Owned |
+|-------------|-------|
+| if contents | yes   |
 
 Unions describe a value that could be one of many types.
 
@@ -99,9 +81,9 @@ type trit = bool?
 
 ## Tuples
 
-| Sized               | Shared |
-|---------------------|--------|
-| if all contents are | no     |
+| Unsized     | Owned |
+|-------------|-------|
+| if contents | yes   |
 
 Tuples describe a positional list of values. They are uniquely identified by shape.
 
@@ -115,9 +97,9 @@ type just_a_number = (number,)
 
 ## Arrays
 
-| Size                              | Shared |
-|-----------------------------------|--------|
-| if contents are + has max length  | no     |
+| Unsized                       | Owned   |
+|-------------------------------|---------|
+| if contents, or no max length | yes     |
 
 Arrays describe a list of values. They are uniquely identified by shape.
 
