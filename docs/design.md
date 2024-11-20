@@ -5,9 +5,9 @@ Lite is designed around a carefully chosen set of types, with particular predict
 
 ## Symbols
 
-| Unsized | Owned |
-|---------|-------|
-| no      | yes   |
+| Unsized |
+|---------|
+| no      |
 
 Symbols are unique types that only equal themselves. They only have one variant, so are always equal to themselves.
 
@@ -21,11 +21,23 @@ type false = symbol
 
 Lite has built-in `nil`, `true` and `false` symbols.
 
+## Never
+
+| Unsized |
+|---------|
+| no      |
+
+The `never` type represents an unsatisfiable type - it is never equal to anything.
+
+```luau
+type never = -- nothing at all
+```
+
 ## Values
 
-| Unsized | Owned |
-|---------|-------|
-| no      | yes   |
+| Unsized |
+|---------|
+| no      |
 
 Values carry opaque, owned data. They don't just have one variant, so aren't always equal to themselves.
 
@@ -41,9 +53,9 @@ Lite has built-in `number`, `string` and `vector` values.
 
 ## Structs
 
-| Unsized     | Owned |
-|-------------|-------|
-| if contents | yes   |
+| Unsized     |
+|-------------|
+| if contents |
 
 Structs describe a named group of values. They are uniquely identified by shape.
 
@@ -59,9 +71,9 @@ type person = {
 
 ## Unions
 
-| Unsized     | Owned |
-|-------------|-------|
-| if contents | yes   |
+| Unsized     |
+|-------------|
+| if contents |
 
 Unions describe a value that could be one of many types.
 
@@ -81,9 +93,9 @@ type trit = bool?
 
 ## Arrays
 
-| Unsized                       | Owned   |
-|-------------------------------|---------|
-| if contents, or no max length | yes     |
+| Unsized                       |
+|-------------------------------|
+| if contents, or no max length |
 
 Arrays describe a list of values. They are uniquely identified by shape.
 
@@ -97,4 +109,32 @@ A maximum length may be defined by starting the declaration with a length.
 
 ```luau
 type couple = {2 person}
+```
+
+## References
+
+| Unsized |
+|---------|
+| no      |
+
+References point to dynamic data that can come from anywhere in the program. 
+
+The reference is conceptually a "wide pointer", allowing unsized data to be stored in sized objects.
+
+References are defined with the `ref` keyword:
+
+```luau
+type far_away_person = ref person
+```
+
+## Unknown
+
+| Unsized |
+|---------|
+| yes     |
+
+The `unknown` type represents the union of all possible expressible types. This includes unsized types, so it is also unsized.
+
+```luau
+type unknown = -- everything possible, unioned together
 ```
