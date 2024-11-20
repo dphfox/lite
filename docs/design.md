@@ -79,22 +79,6 @@ The question mark `?` operator is syntax sugar for a union with the built-in `ni
 type trit = bool?
 ```
 
-## Tuples
-
-| Unsized     | Owned |
-|-------------|-------|
-| if contents | yes   |
-
-Tuples describe a positional list of values. They are uniquely identified by shape.
-
-They are defined in parentheses `()`. Trailing commas are allowed for disambiguation.
-
-```luau
-type complex = (number, number)
-type quaternion = (number, vector)
-type just_a_number = (number,)
-```
-
 ## Arrays
 
 | Unsized                       | Owned   |
