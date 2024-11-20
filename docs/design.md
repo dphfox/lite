@@ -40,9 +40,9 @@ Lite has built-in `number`, `string` and `vector` values.
 
 ### Structs
 
-| Unsized     |
-|-------------|
-| if contents |
+| Unsized |
+|---------|
+| no      |
 
 Structs describe a named group of values. They are uniquely identified by shape.
 
@@ -154,9 +154,9 @@ type do_something_crazy = (x: string, y: boolean) -> (person, vector)
 
 ### Generics
 
-| Unsized                      |
-|------------------------------|
-| if contents & parameters are |
+| Unsized                       |
+|-------------------------------|
+| if contents or parameters are |
 
 Generics allow a family of types to be expressed.
 
@@ -253,3 +253,47 @@ All locations in a Luau program expect sized values only. Unsized values are aut
 Forcing a type with `::` forces the type to become referenced. 
 
 It is not possible to "dereference" a type, but it is possible to perform an operation on a referenced type that results in a new, non-referenced value. For example, getting the length of a referenced table returns a number which is not referenced.
+
+## Compilation
+
+During compilation, locations are added and removed based on iterative rules until nothing else is left to do.
+
+### Unsized
+
+Locations with an unsized type are left as-is.
+
+### Literals
+
+Locations that evaluate to a literal can be optimised away via constant folding. 
+
+### Never
+
+Locations with a never type can never compile.
+
+### Values
+
+Locations with a non-literal value type are left as-is.
+
+### Structs
+
+Locations with a struct are unpacked, creating one new location per field.
+
+### Unions
+
+Locations with a sized union create as many locations as needed to fit the largest variant.
+
+### Arrays
+
+Locations with a sized array create as many locations as needed to fit the maximum number of members.
+
+### References
+
+Locations with a reference are left as-is.
+
+### Function references
+
+Locations with a function reference are left as-is.
+
+### Generics
+
+Locations with a sized generic value are monomorphised.
