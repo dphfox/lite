@@ -118,10 +118,7 @@ References point to dynamic data that can come from anywhere in the program.
 
 The reference is conceptually a "wide pointer", allowing unsized data to be stored in sized objects.
 
-References are defined with the `ref` keyword:
-
-```luau
-type far_away_person = ref person
-```
-
 References are typically inferred when dealing with unsized data, but this can be turned off.
+
+# Language
+
