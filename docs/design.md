@@ -168,7 +168,7 @@ type binding<interior> = {value: interior}?
 
 ## Language spec
 
-These are strictly the features supported by Lite.
+These are strictly the features supported by Lite. More things may be possible under this model, but as a proof of concept, these are enough to demonstrate.
 
 ### Literals
 
